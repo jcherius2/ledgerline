@@ -1,0 +1,23 @@
+{
+  "name": "ledgerline",
+  "version": "0.1.0",
+  "description": "An invoice ledger for PayPal with a collections agent that proposes and a human who confirms.",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "build": "tsc -p tsconfig.json && tsc -p web/tsconfig.json",
+    "demo": "npm run build && node dist/src/demo.js",
+    "start": "npm run build && node dist/src/main.js",
+    "test": "npm run build && node --test \"dist/test/*.test.js\"",
+    "check:ui": "npm run build && node scripts/ui-check.mjs"
+  },
+  "dependencies": {
+    "ag-grid-community": "34.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.6.0"
+  }
+}

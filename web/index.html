@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ledgerline</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="mast">
+    <div class="brand">
+      <h1>Ledgerline</h1>
+      <p>PayPal invoices in one ledger. The agent proposes; nothing is sent until you confirm it.</p>
+    </div>
+    <dl class="env" id="env"></dl>
+  </header>
+
+  <section class="figures" id="figures" aria-label="Receivables at a glance"></section>
+
+  <main class="work">
+    <section class="ledger" aria-label="Invoice ledger">
+      <div class="toolbar">
+        <div class="views" id="views" role="group" aria-label="Views"></div>
+        <input id="search" type="search" placeholder="Search invoice, customer, status" aria-label="Search the ledger">
+        <span class="spacer"></span>
+        <label class="tone">Tone
+          <select id="tone">
+            <option value="auto">Auto (by risk)</option>
+            <option value="friendly">Friendly</option>
+            <option value="neutral">Neutral</option>
+            <option value="firm">Firm</option>
+          </select>
+        </label>
+        <button id="ask" class="primary" type="button">Ask the agent</button>
+        <button id="new" type="button">New invoice</button>
+        <button id="csv" type="button">Export CSV</button>
+      </div>
+      <div id="grid"></div>
+    </section>
+
+    <aside class="side">
+      <section class="panel">
+        <h2>Awaiting your confirmation <span class="count" id="queue-count">0</span></h2>
+        <div id="queue"></div>
+      </section>
+      <section class="panel">
+        <h2>Invoice</h2>
+        <div id="detail"></div>
+      </section>
+      <section class="panel">
+        <h2>Journal <span class="chain" id="chain"></span></h2>
+        <ol id="journal"></ol>
+      </section>
+    </aside>
+  </main>
+
+  <dialog id="new-dialog">
+    <form id="new-form" method="dialog">
+      <h2>New draft invoice</h2>
+      <p class="hint">This prepares a draft. It is created at PayPal only after you confirm it in the queue, and it is not sent to the customer until you send it.</p>
+      <label>Customer <input name="customer" required maxlength="120" autocomplete="off"></label>
+      <label>Customer email <input name="email" type="email" required autocomplete="off"></label>
+      <label>Description <input name="description" required maxlength="200" autocomplete="off"></label>
+      <div class="row">
+        <label>Amount <input name="amount" required inputmode="decimal" pattern="\d+(\.\d{1,2})?" placeholder="0.00"></label>
+        <label>Currency
+          <select name="currency"><option>EUR</option><option>USD</option><option>GBP</option></select>
+        </label>
+        <label>Due in (days) <input name="dueInDays" type="number" min="0" max="365" value="30" required></label>
+      </div>
+      <footer>
+        <button type="button" id="new-cancel">Close</button>
+        <button type="submit" class="primary">Prepare draft</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <div id="toast" role="status" aria-live="polite"></div>
+
+  <script src="/vendor/ag-grid-community.min.js"></script>
+  <script type="module" src="/app.js"></script>
+</body>
+</html>
